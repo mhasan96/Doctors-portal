@@ -32,7 +32,7 @@ const Banner = () => {
             </Typography>
             <Typography
               variant="h6"
-              sx={{ fontSize: 12, fontWeight: 300, color: "gray" }}
+              sx={{ my: 3, fontSize: 12, fontWeight: 300, color: "gray" }}
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
               consectetur vitae sint voluptatem autem temporibus accusamus
