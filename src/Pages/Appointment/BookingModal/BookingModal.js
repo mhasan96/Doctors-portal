@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import useAuth from "../../../hooks/useAuth";
-
 import Typography from "@mui/material/Typography";
 import { Button, TextField } from "@mui/material";
 
@@ -20,7 +19,13 @@ const style = {
   p: 4,
 };
 
-const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
+const BookingModal = ({
+  openBooking,
+  handleBookingClose,
+  booking,
+  date,
+  setBookingSuccess,
+}) => {
   const { name, time } = booking;
   const { user } = useAuth();
   const initialInfo = {
@@ -47,14 +52,28 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
       ...bookingInfo,
       time,
       serviceName: name,
-      date: date.toLocalDateString(),
+      date: date.toLocaleDateString(),
     };
 
     //send to the server
     console.log(appointment);
+    fetch("http://localhost:5000/appointments", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          setBookingSuccess(true);
+          handleBookingClose();
+        }
+      });
 
     //Collect Data and Send to the Server
-    handleBookingClose();
+
     e.preventDefault();
   };
   return (
