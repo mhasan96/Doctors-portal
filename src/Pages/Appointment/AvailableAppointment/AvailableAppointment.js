@@ -7,7 +7,7 @@ const bookings = [
   {
     id: 1,
     name: "Teeth Orthodontics",
-    time: "8:00 AM - 9.00 AM",
+    time: "08:00 AM - 09.00 AM",
     space: 10,
   },
   {
@@ -19,25 +19,25 @@ const bookings = [
   {
     id: 3,
     name: "Teeth Cleaning",
-    time: "5:00 PM - 6.30 PM",
+    time: "05:00 PM - 06.30 PM",
     space: 10,
   },
   {
     id: 4,
     name: "Cavity Protection",
-    time: "7:00 AM - 8.30 AM",
+    time: "07:00 AM - 08.30 AM",
     space: 5,
   },
   {
     id: 5,
-    name: "Padiatric Dental =",
-    time: "6:00 PM - 7.00 PM",
+    name: "Padiatric Dental",
+    time: "06:00 PM - 07.00 PM",
     space: 10,
   },
   {
     id: 6,
     name: "Oral Surgery",
-    time: "7:00 PM - 8.00 PM",
+    time: "07:00 PM - 08.00 PM",
     space: 10,
   },
 ];
