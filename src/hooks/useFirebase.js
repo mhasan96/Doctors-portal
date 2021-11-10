@@ -10,7 +10,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { set } from "date-fns";
+// import { set } from "date-fns";
 
 //initialize firebase
 initializeFirebase();
@@ -28,6 +28,9 @@ const useFirbase = () => {
         setAuthError("");
         const newUser = { email, displayName: name };
         setUser(newUser);
+        //Save user to the database
+        saveUser(email, name, "POST");
+
         ///Send Name to firebase after creation
 
         updateProfile(auth.currentUser, {
@@ -64,7 +67,10 @@ const useFirbase = () => {
     signInWithPopup(auth, googleProvide)
       .then((result) => {
         const user = result.user;
+        saveUser(user.email, user.displayName, "PUT");
         setAuthError("");
+        const destination = location?.state?.from || "/";
+        history.replace(destination);
       })
       .catch((error) => {
         setAuthError(error.message);
@@ -94,6 +100,17 @@ const useFirbase = () => {
         // An error happened.
       })
       .finally(() => setIsLoading(false));
+  };
+
+  const saveUser = (email, displayName, method) => {
+    const user = { email, displayName };
+    fetch("http://localhost:5000/users", {
+      method: method,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }).then();
   };
 
   return {
