@@ -17,21 +17,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
 import DashboardHome from "../DashBoardHome/DashboardHome";
 import AddDoctor from "../AddDoctor/AddDoctor";
+import useAuth from "../../../hooks/useAuth";
+import AdminRoute from "../../Login/AdminRoute/AdminRoute";
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
   const { window } = props;
+  const { admin } = useAuth();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   // const [date, setDate] = React.useState(new Date());
   let { path, url } = useRouteMatch();
@@ -50,13 +47,17 @@ function Dashboard(props) {
       <Link to={`${url}`}>
         <Button color="inherit">Dashboard</Button>
       </Link>
-      <Link to={`${url}/makeAdmin`}>
-        <Button color="inherit">Make Admin</Button>
-      </Link>
+      {admin && (
+        <Box>
+          <Link to={`${url}/makeAdmin`}>
+            <Button color="inherit">Make Admin</Button>
+          </Link>
 
-      <Link to={`${url}/addDoctor`}>
-        <Button color="inherit">Add Doctor</Button>
-      </Link>
+          <Link to={`${url}/addDoctor`}>
+            <Button color="inherit">Add Doctor</Button>
+          </Link>
+        </Box>
+      )}
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
@@ -149,12 +150,12 @@ function Dashboard(props) {
           <Route exact path={path}>
             <DashboardHome></DashboardHome>
           </Route>
-          <Route path={`${path}/makeAdmin`}>
+          <AdminRoute path={`${path}/makeAdmin`}>
             <MakeAdmin></MakeAdmin>
-          </Route>
-          <Route path={`${path}/addDoctor`}>
+          </AdminRoute>
+          <AdminRoute path={`${path}/addDoctor`}>
             <AddDoctor></AddDoctor>
-          </Route>
+          </AdminRoute>
         </Switch>
       </Box>
     </Box>
